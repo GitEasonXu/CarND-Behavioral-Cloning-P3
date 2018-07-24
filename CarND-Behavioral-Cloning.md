@@ -2,7 +2,12 @@
 
 In this project for the Udacity Self-Driving Car Nanodegree a deep CNN is developed that can steer a car in a simulator provided by Udacity. The CNN drives the car autonomously around a track. The network is trained on images from a video stream that was recorded while a human was steering the car. The CNN thus clones the human driving behavior.
 
-![Track 1 Car](image/trace1.gif)   ![Track 2 Car](image/trace2.gif)
+
+<center>
+<img src="image/trace1.gif" width=322 height=234 />
+<img src="image/trace2.gif" width=322 height=234 />
+</center>
+
 
 **The goals / steps of this project are the following:**
 * Use the simulator to collect data of good driving behavior
