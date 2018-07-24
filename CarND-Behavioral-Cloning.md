@@ -2,11 +2,11 @@
 
 In this project for the Udacity Self-Driving Car Nanodegree a deep CNN is developed that can steer a car in a simulator provided by Udacity. The CNN drives the car autonomously around a track. The network is trained on images from a video stream that was recorded while a human was steering the car. The CNN thus clones the human driving behavior.
 
+
 <div  align="center">    
 <img src="image/trace1.gif" width=322 height=234 border=0/>
 <img src="image/trace2.gif" width=322 height=234 border=0/>
 </div>
-
 
 
 **The goals / steps of this project are the following:**
@@ -33,7 +33,8 @@ My project includes the following files:
 * **CarND-Behavioral-Cloning.md:** summarizing the results
 
 #### 2. Submission includes functional code
-Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
+Using the [Udacity self-driving car simulator](https://github.com/udacity/self-driving-car-sim) and my drive.py file, the car can be driven autonomously around the track by executing 
+
 ```sh
 python drive.py model.h5
 ```
@@ -42,6 +43,47 @@ python drive.py model.h5
 
 The model.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
 
+Emphasis here, yourself data should be saved in `data` file, and the structure should like this:
+```
+.
+├── IMG
+│   ├── center_2016_12_01_13_30_48_287.jpg
+│   ├── center_2016_12_01_13_30_48_404.jpg
+│   ├── center_2016_12_01_13_31_12_937.jpg
+│   ├── center_2016_12_01_13_31_13_037.jpg
+├── my_data_1
+│   └── driving_log.csv
+├── my_data_2
+│   └── driving_log.csv
+├── my_data_3
+│   ├── driving_log.csv
+│   └── P3-data_3.zip
+├── my_data_4
+│   └── driving_log.csv
+├── my_data_5
+│   └── driving_log.csv
+└── udacity_data
+    └── driving_log.csv
+```
+Furthermore, you can modify this part of the program, if you don't like this structure, 
+```
+using_my_data = True
+using_my_data_2 = True
+using_my_data_3 = True
+using_my_data_4 = True
+using_my_data_5 = True
+using_udacity_data = True
+data_to_use = [using_my_data, using_my_data_2, using_my_data_3,using_my_data_4,using_my_data_5,using_udacity_data]
+csv_path = ['./data/my_data_1/driving_log.csv', './data/my_data_2/driving_log.csv', './data/my_data_3/driving_log.csv', './data/my_data_4/driving_log.csv',  './data/my_data_5/driving_log.csv','./data/udacity_data/driving_log.csv']
+
+lines = []
+for j in range(len(csv_path)):
+    if data_to_use[j]:
+        with open(csv_path[j]) as csv_file:
+            data = csv.reader(csv_file)
+            for line in data:
+                lines.append(line)
+```
 ### Model Architecture and Training Strategy
 
 #### 1. An appropriate model architecture has been employed
