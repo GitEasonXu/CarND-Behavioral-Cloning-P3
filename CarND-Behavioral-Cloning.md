@@ -97,6 +97,44 @@ My model is [nVidia Autonomous Car Group](https://devblogs.nvidia.com/parallelfo
 
 <img src="image/model.png" width="40%" height="40%" border=0/>
 
+
+#### 2. Attempts to reduce overfitting in the model
+In order to reduce overfitting, I use three main methods:
+- **Add dropout layers:**
+The model contains dropout layers in order to reduce overfitting ([model.py](model.py#L168)). 
+- **Augmented data:**  
+Not only use center image, but also use left and right image, and flip each image([model.py](model.py#L45))
+- **Collect more data:**
+In addition to the above methods, you can also use [Udacity self-driving car simulator](https://github.com/udacity/self-driving-car-sim)  to collect more data.
+
+#### 3. Model parameter tuning
+
+The model used an adam optimizer, so the learning rate was not tuned manually ([model.py](model.py#L25)).
+
+#### 4. Appropriate training data
+
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road. Each image was used to train the model.
+
+For details about how I created the training data, see the next section. 
+
+### Model Architecture and Training Strategy
+
+#### 1. Solution Design Approach
+
+My first step was to use a simple convolution neural network model, but the test result was so bad. So, I thought use VGG16 maybe a better choice, because it generally performs well. When I was training VGG16 model, I found that each epoch was very slow for VGG16 model is too complicated.
+Finally I decided to use [nVidia Autonomous Car Group](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/) model.
+
+In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. To combat the overfitting, I modified the model add Dropout layer.
+
+
+The final step was to run the simulator to see how well the car was driving around track one. At the beginning you may encounter a car rushing out of the runway, especially when turning. In order to improve the driving behavior in these cases, You should make more pictures in the place of vehicle made a mistake.
+
+At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
+
+#### 2. Final Model Architecture
+
+The final model architecture could be found [here](model.py#L153-L179)
+
 A model summary is as follows:
 ```
 _________________________________________________________________
@@ -138,61 +176,17 @@ Non-trainable params: 0
 _________________________________________________________________
 ```
 
-#### 2. Attempts to reduce overfitting in the model
-In order to reduce overfitting, I use three main methods:
-- **Add dropout layers:**
-The model contains dropout layers in order to reduce overfitting ([model.py](model.py#L168)). 
-- **Augmented data:**  
-Not only use center image, but also use left and right image, and flip each image([model.py](model.py#L45))
-- **Collect more data:**
-In addition to the above methods, you can also use [Udacity self-driving car simulator](https://github.com/udacity/self-driving-car-sim)  to collect more data.
-
-#### 3. Model parameter tuning
-
-The model used an adam optimizer, so the learning rate was not tuned manually ([model.py](model.py#L25)).
-
-#### 4. Appropriate training data
-
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road. Each image was used to train the model.
-
-For details about how I created the training data, see the next section. 
-
-### Model Architecture and Training Strategy
-
-#### 1. Solution Design Approach
-
-My first step was to use a simple convolution neural network model, but the test result was so bad. So, I thought use VGG16 maybe a better choice, because it generally performs well. When I was training VGG16 model, I found that each epoch was very slow for VGG16 model is too complicated.
-Finally I decided to use [nVidia Autonomous Car Group](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/) model.
-
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
-
-To combat the overfitting, I modified the model so that ...
-
-Then I ... 
-
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
-
-At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
-
-#### 2. Final Model Architecture
-
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
-
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
-
-![alt text][image1]
-
 #### 3. Creation of the Training Set & Training Process
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
-![alt text][image2]
+![Center][image/center.jpg]
 
 I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
 
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
+![Left][image/left.jpg]
+![Center][image/center.jpg]
+![Right][image/right.jpg]
 
 Then I repeated this process on track two in order to get more data points.
 
