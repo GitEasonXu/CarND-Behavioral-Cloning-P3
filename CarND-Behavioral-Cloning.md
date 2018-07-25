@@ -93,9 +93,9 @@ python model.py
 
 #### 1. An appropriate model architecture has been employed
 
-My model is [nVidia Autonomous Car Group](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/) model, and the results show that this model has a good performance (this model could be found [here](model.py#L153-L177)).
+My model is [nVidia Autonomous Car Group](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/) model, and the results show that this model has a good performance (this model could be found [here](model.py#L153-L179)).
 
-<img src="image/model.png" width="60%" height="60%" border=0/>
+<img src="image/model.png" width="40%" height="40%" border=0/>
 
 A model summary is as follows:
 ```
@@ -106,19 +106,25 @@ lambda_1 (Lambda)            (None, 160, 320, 3)       0
 _________________________________________________________________
 cropping2d_1 (Cropping2D)    (None, 90, 320, 3)        0
 _________________________________________________________________
-conv2d_1 (Conv2D)            (None, 43, 158, 24)       1824
+lambda_2 (Lambda)            (None, 66, 200, 3)        0
 _________________________________________________________________
-conv2d_2 (Conv2D)            (None, 20, 77, 36)        21636
+conv2d_1 (Conv2D)            (None, 31, 98, 24)        1824
 _________________________________________________________________
-conv2d_3 (Conv2D)            (None, 8, 37, 48)         43248
+conv2d_2 (Conv2D)            (None, 14, 47, 36)        21636
 _________________________________________________________________
-conv2d_4 (Conv2D)            (None, 6, 35, 64)         27712
+conv2d_3 (Conv2D)            (None, 5, 22, 48)         43248
 _________________________________________________________________
-conv2d_5 (Conv2D)            (None, 4, 33, 64)         36928
+dropout_1 (Dropout)          (None, 5, 22, 48)         0
 _________________________________________________________________
-flatten_1 (Flatten)          (None, 8448)              0
+conv2d_4 (Conv2D)            (None, 3, 20, 64)         27712
 _________________________________________________________________
-dense_1 (Dense)              (None, 100)               844900
+conv2d_5 (Conv2D)            (None, 1, 18, 64)         36928
+_________________________________________________________________
+dropout_2 (Dropout)          (None, 1, 18, 64)         0
+_________________________________________________________________
+flatten_1 (Flatten)          (None, 1152)              0
+_________________________________________________________________
+dense_1 (Dense)              (None, 100)               115300
 _________________________________________________________________
 dense_2 (Dense)              (None, 50)                5050
 _________________________________________________________________
@@ -126,18 +132,20 @@ dense_3 (Dense)              (None, 10)                510
 _________________________________________________________________
 dense_4 (Dense)              (None, 1)                 11
 =================================================================
-Total params: 981,819
-Trainable params: 981,819
+Total params: 252,219
+Trainable params: 252,219
 Non-trainable params: 0
+_________________________________________________________________
 ```
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
-
 #### 2. Attempts to reduce overfitting in the model
-
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
-
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+In order to reduce overfitting, I use three main methods:
+- **Add dropout layers:**
+The model contains dropout layers in order to reduce overfitting (model.py lines 168). 
+- **Augmented data:**  
+Not only use center image, but also use left and right image, and flip each image(model.py lines 45)
+- **Collect more data:**
+In addition to the above methods, you can also use [Udacity self-driving car simulator](https://github.com/udacity/self-driving-car-sim)  to collect more data.
 
 #### 3. Model parameter tuning
 
