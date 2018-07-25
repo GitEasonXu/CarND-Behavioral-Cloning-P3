@@ -141,19 +141,19 @@ _________________________________________________________________
 #### 2. Attempts to reduce overfitting in the model
 In order to reduce overfitting, I use three main methods:
 - **Add dropout layers:**
-The model contains dropout layers in order to reduce overfitting (model.py lines 168). 
+The model contains dropout layers in order to reduce overfitting ([model.py](model.py#L168)). 
 - **Augmented data:**  
-Not only use center image, but also use left and right image, and flip each image(model.py lines 45)
+Not only use center image, but also use left and right image, and flip each image([model.py](model.py#L45))
 - **Collect more data:**
 In addition to the above methods, you can also use [Udacity self-driving car simulator](https://github.com/udacity/self-driving-car-sim)  to collect more data.
 
 #### 3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+The model used an adam optimizer, so the learning rate was not tuned manually ([model.py](model.py#L25)).
 
 #### 4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road. Each image was used to train the model.
 
 For details about how I created the training data, see the next section. 
 
@@ -161,9 +161,8 @@ For details about how I created the training data, see the next section.
 
 #### 1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to ...
-
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+My first step was to use a simple convolution neural network model, but the test result was so bad. So, I thought use VGG16 maybe a better choice, because it generally performs well. When I was training VGG16 model, I found that each epoch was very slow for VGG16 model is too complicated.
+Finally I decided to use [nVidia Autonomous Car Group](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/) model.
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
 
