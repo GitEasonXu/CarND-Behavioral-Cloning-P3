@@ -157,16 +157,18 @@ def nVidiaModel():
     model = Sequential()
     model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160,320,3)))
     model.add(Cropping2D(cropping=((50,20), (0,0))))
-    
-   
-    
+    try:
+        model.add(Lambda(lambda image:K.tf.image.resize_images(image, (66, 200))))
+    except :
+        # if you have older version of tensorflow
+        model.add(Lambda(lambda image: K.tf.image.resize_images(image, 66, 200)))
     model.add(Conv2D(24,(5,5),strides=(2, 2), padding='valid',activation='relu'))
     model.add(Conv2D(36,(5,5),strides=(2, 2), padding='valid',activation='relu'))                                   
     model.add(Conv2D(48,(5,5),strides=(2, 2), padding='valid',activation='relu'))
-                                      
+    model.add(Dropout(0.25))
     model.add(Conv2D(64,(3,3),strides=(1, 1), padding='valid',activation='relu'))
-    model.add(Conv2D(64,(3,3),strides=(1, 1), padding='valid',activation='relu'))   
-    
+    model.add(Conv2D(64,(3,3),strides=(1, 1), padding='valid',activation='relu'))
+    model.add(Dropout(0.25))
     model.add(Flatten())
     model.add(Dense(100))
     model.add(Dense(50))
