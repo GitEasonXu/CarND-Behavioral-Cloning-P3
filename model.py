@@ -185,7 +185,7 @@ model.summary()
 
 # In[ ]:
 print('\nTraining ------------')    #从文件中提取参数，训练后存在新的文件中
-cm = 1                              #修改这个参数可以多次训练  
+cm = 0                              #修改这个参数可以多次训练  
 if cm >= 1:
     model.load_weights('model_{}.h5'.format(cm))
     
