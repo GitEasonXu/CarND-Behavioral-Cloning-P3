@@ -84,11 +84,52 @@ for j in range(len(csv_path)):
             for line in data:
                 lines.append(line)
 ```
+Finally, train yourself model by running 
+```
+python model.py
+```
+
 ### Model Architecture and Training Strategy
 
 #### 1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+My model is [nVidia Autonomous Car Group](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/) model, and the results show that this model has a good performance (this model could be found [here](model.py#L153-L177)).
+
+<img src="image/model.png" width="60%" height="60%" border=0/>
+
+A model summary is as follows:
+```
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #
+=================================================================
+lambda_1 (Lambda)            (None, 160, 320, 3)       0
+_________________________________________________________________
+cropping2d_1 (Cropping2D)    (None, 90, 320, 3)        0
+_________________________________________________________________
+conv2d_1 (Conv2D)            (None, 43, 158, 24)       1824
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 20, 77, 36)        21636
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 8, 37, 48)         43248
+_________________________________________________________________
+conv2d_4 (Conv2D)            (None, 6, 35, 64)         27712
+_________________________________________________________________
+conv2d_5 (Conv2D)            (None, 4, 33, 64)         36928
+_________________________________________________________________
+flatten_1 (Flatten)          (None, 8448)              0
+_________________________________________________________________
+dense_1 (Dense)              (None, 100)               844900
+_________________________________________________________________
+dense_2 (Dense)              (None, 50)                5050
+_________________________________________________________________
+dense_3 (Dense)              (None, 10)                510
+_________________________________________________________________
+dense_4 (Dense)              (None, 1)                 11
+=================================================================
+Total params: 981,819
+Trainable params: 981,819
+Non-trainable params: 0
+```
 
 The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
 
